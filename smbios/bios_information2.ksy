@@ -17,50 +17,9 @@ types:
           cases:
             'type_enum::table0': bios_information
             'type_enum::table1': system_information
-            'type_enum::table2': skipper
             'type_enum::table3': system_enclosure_or_chassis
-            'type_enum::table4': skipper
-            'type_enum::table5': skipper
-            'type_enum::table6': skipper
-            'type_enum::table7': skipper
-            'type_enum::table8': skipper
-            'type_enum::table9': skipper
-            'type_enum::table10': skipper
-            'type_enum::table11': skipper
-            'type_enum::table12': skipper
-            'type_enum::table13': skipper
-            'type_enum::table14': skipper
-            'type_enum::table15': skipper
-            'type_enum::table16': skipper
-            'type_enum::table17': skipper
-            'type_enum::table18': skipper
-            'type_enum::table19': skipper
-            'type_enum::table20': skipper
-            'type_enum::table21': skipper
-            'type_enum::table22': skipper
-            'type_enum::table23': skipper
-            'type_enum::table24': skipper
-            'type_enum::table25': skipper
-            'type_enum::table26': skipper
-            'type_enum::table27': skipper
-            'type_enum::table28': skipper
-            'type_enum::table29': skipper
-            'type_enum::table30': skipper
-            'type_enum::table31': skipper
-            'type_enum::table32': skipper
-            'type_enum::table33': skipper
-            'type_enum::table34': skipper
-            'type_enum::table35': skipper
-            'type_enum::table36': skipper
-            'type_enum::table37': skipper
-            'type_enum::table38': skipper
-            'type_enum::table39': skipper
-            'type_enum::table40': skipper
-            'type_enum::table41': skipper
-            'type_enum::table42': skipper
-            'type_enum::table127': skipper
-            'type_enum::table136': skipper
-            'type_enum::table221': skipper
+            'type_enum::table22': portable_battery
+            _: skipper
       - id: strings
         type: strings
         repeat: until
@@ -71,49 +30,8 @@ types:
         0x01: table1
         0x02: table2
         0x03: table3
-        0x04: table4
-        0x05: table5
-        0x06: table6
-        0x07: table7
-        0x08: table8
-        0x09: table9
-        0x0a: table10
-        0x0b: table11
-        0x0c: table12
-        0x0d: table13
-        0x0e: table14
-        0x0f: table15
-        0x10: table16
-        0x11: table17
-        0x12: table18
-        0x13: table19
-        0x14: table20
-        0x15: table21
         0x16: table22
-        0x17: table23
-        0x18: table24
-        0x19: table25
-        0x1a: table26
-        0x1b: table27
-        0x1c: table28
-        0x1d: table29
-        0x1e: table30
-        0x1f: table31
-        0x20: table32
-        0x21: table33
-        0x22: table34
-        0x23: table35
-        0x24: table36
-        0x25: table37
-        0x26: table38
-        0x27: table39
-        0x28: table40
-        0x29: table41
-        0x30: table42
-        0x7f: table127
-        0x88: table136
-        0xdd: table221
-        
+
   strings:
     seq:
       - id: string
