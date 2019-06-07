@@ -4,21 +4,19 @@ meta:
   imports:
     - strings
 seq:
-  - id: type
-    type: u1
   - id: length
     type: u1
   - id: handle
     type: u2
-  - id: location
+  - id: location_index
     type: u1
-  - id: manufacturer
+  - id: manufacturer_index
     type: u1
-  - id: manufacture_date
+  - id: manufacture_date_index
     type: u1
-  - id: serial_number
+  - id: serial_number_index
     type: u1
-  - id: device_name
+  - id: device_name_index
     type: u1
   - id: device_chemistry
     type: u1
@@ -26,7 +24,7 @@ seq:
     type: u2
   - id: design_voltaje
     type: u2
-  - id: sbs_version_number
+  - id: sbds_version_number_index
     type: u1
   - id: maximum_error_in_battery_data
     type: u1
@@ -34,7 +32,7 @@ seq:
     type: u2
   - id: dbds_manufacture_date
     type: u2
-  - id: sbds_device_chemistry
+  - id: sbds_device_chemistry_index
     type: u1
   - id: design_capacity_multiplier
     type: u1
@@ -44,4 +42,27 @@ seq:
     type: strings
     repeat: until
     repeat-until: _.string.length == 1 and strings_array.size > 1
+instances:
+  location:
+    value: strings_array[location_index - 1]
+    if: location_index > 0
+  manufacturer:
+    value: strings_array[manufacturer_index - 1]
+    if: manufacturer_index > 0
+  manufacture_date:
+    value: strings_array[manufacture_date_index - 1]
+    if: manufacture_date_index > 0
+  serial_number:
+    value: strings_array[serial_number_index - 1]
+    if: serial_number_index > 0
+  device_name:
+    value: strings_array[device_name_index - 1]
+    if: device_name_index > 0
+  sbds_version_number:
+    value: strings_array[sbds_version_number_index - 1]
+    if: sbds_version_number_index > 0
+  sbds_device_chemistry:
+    value: strings_array[sbds_device_chemistry_index - 1]
+    if: sbds_device_chemistry_index > 0
+
 
