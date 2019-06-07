@@ -2,42 +2,50 @@ meta:
   id: smbios
   endian: le
 seq:
-  - id: table_0
-    type: bios_information
-  - id: table_1
-    type: system_information
-  - id: table_2
-    type: skipper
-  - id: table_3
-    type: system_enclosure_or_chassis
-  - id: table_3to21
-    type: skipper
-    repeat: expr
-    repeat-expr: 18
-  - id: table_22
-    type: portable_battery
+  - id: tables
+    type: table
+    repeat: eos
 types:
+  table:
+    seq:
+      - id: type
+        type: u1
+        enum: type_enum
+      - id: table
+        type:
+          switch-on: type
+          cases:
+            'type_enum::table0': bios_information
+            'type_enum::table1': system_information
+            'type_enum::table22': portable_battery
+            _: skipper
+    enums:
+      type_enum:
+        0x00: table0
+        0x01: table1
+        0x02: table2
+        0x03: table3
+        0x16: table22
   strings:
     seq:
       - id: string
-        terminator: 0
+        type: strz
+        encoding: UTF-8
         include: true
         consume: false
   bios_information:
     seq:
-      - id: type
-        type: u1
       - id: length
         type: u1
-      - id: handle
+      - id: handle_index
         type: u2
-      - id: vendor
+      - id: vendor_index
         type: u1
       - id: bios_version
         type: u1
       - id: bios_starting_address_segment
         type: u2
-      - id: bios_release_date
+      - id: bios_release_date_index
         type: u1
       - id: bios_rom_size
         type: u1
@@ -45,14 +53,22 @@ types:
         type: u8
       - id: bios_characteristics_ext_bytes
         size: length - 0x12
-      - id: strings
+      - id: strings_array
         type: strings
         repeat: until
-        repeat-until: _.string == [0]
+        repeat-until: _.string.length == 1 and strings_array.size > 1
+    instances:
+      handle:
+        value: strings_array[handle_index - 1]
+        if: handle_index > 0
+      vendor:
+        value: strings_array[vendor_index - 1]
+        if: vendor_index > 0
+      bios_release_date:
+        value: strings_array[bios_release_date_index - 1]
+        if: bios_release_date_index > 0
   system_information:
     seq:
-      - id: type
-        type: u1
       - id: length
         type: u1
       - id: handle
@@ -73,54 +89,10 @@ types:
         type: u1
       - id: family
         type: u1
-      - id: strings
+      - id: strings_array
         type: strings
         repeat: until
-        repeat-until: _.string == [0]
-  system_enclosure_or_chassis:
-    seq:
-      - id: type
-        contents: [0x03]
-      - id: length
-        type: u1
-      - id: handle
-        type: u2
-      - id: manufacturer
-        type: u1
-      - id: type2
-        type: u1
-      - id: version
-        type: u1
-      - id: serial_number
-        type: u1
-      - id: asset_tag_number
-        type: u1
-      - id: boot_up_state
-        type: u1
-      - id: power_supply_state
-        type: u1
-      - id: thermal_state
-        type: u1
-      - id: security_status
-        type: u1
-      - id: oem_defined
-        type: u4
-      - id: height
-        type: u1
-      - id: number_of_power_cords
-        type: u1
-      - id: contained_element_count
-        type: u1
-      - id: contained_element_record_length
-        type: u1
-      - id: contained_elements
-        size: contained_element_count * contained_element_record_length
-      - id: sku_number
-        type: u1
-      - id: strings
-        type: strings
-        repeat: until
-        repeat-until: _.string == [0]
+        repeat-until: _.string.length == 1 and strings_array.size > 1
   portable_battery:
     seq:
       - id: type
@@ -159,19 +131,18 @@ types:
         type: u1
       - id: oem_specific
         type: u4
-      - id: strings
+      - id: strings_array
         type: strings
         repeat: until
-        repeat-until: _.string == [0]
+        repeat-until: _.string.length == 1 and strings_array.size > 1
   skipper:  
     seq:
-      - id: type
-        type: u1
       - id: length
         type: u1
       - id: rest
         size: length - 2
-      - id: strings
+      - id: strings_array
         type: strings
         repeat: until
-        repeat-until: _.string == [0]
+        repeat-until: _.string.length == 1 and strings_array.size > 1
+   
