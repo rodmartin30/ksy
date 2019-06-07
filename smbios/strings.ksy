@@ -6,5 +6,4 @@ seq:
     type: strz
     encoding: UTF-8
     include: true
-    consume: false
 

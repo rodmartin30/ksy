@@ -44,7 +44,7 @@ instances:
   sku_number:
     value: strings_array[sku_number_index - 1]
     if: sku_number_index > 0
-  amily:
+  family:
     value: strings_array[family_index - 1]
     if: family_index > 0
 
